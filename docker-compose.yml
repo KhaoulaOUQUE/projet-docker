@@ -1,0 +1,22 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: app-service
+    working_dir: /usr/src/app
+    volumes:
+      - .:/usr/src/app:ro
+    ports:
+      - "8000:5000"
+    depends_on:
+      - db
+    environment:
+      - "mongodb://admin:password@db:27017/myDB"
+  db:
+    image: mongo:6.0
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+        - .:/data/dbdo
